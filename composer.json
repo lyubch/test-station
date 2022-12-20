@@ -1,0 +1,55 @@
+{
+    "name": "lyubch/test-station",
+    "description": "Test Station Example",
+    "type": "project",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Anton Lyubchenko",
+            "email": "anton.lyubch@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "yiisoft/yii2": "~2.0.45"
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "yii\\composer\\Installer::postInstall"
+        ],
+        "post-create-project-cmd": [
+            "yii\\composer\\Installer::postCreateProject",
+            "yii\\composer\\Installer::postInstall"
+        ]
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        },
+        "yii\\composer\\Installer::postCreateProject": {
+            "setPermission": [
+                {
+                    "public/assets": "0777",
+                    "protected/runtime": "0777",
+                    "protected/yii": "0755"
+                }
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}

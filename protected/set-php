@@ -1,0 +1,27 @@
+#!/bin/sh
+#!/bin/bash
+#
+# Usage:
+# $ sudo ./protected/set-php 7.4
+#
+case $1 in
+    "5.6" | "7.0" | "7.1" | "7.2" | "7.3" | "7.4" | "8.0" | "8.1" | "8.2")
+        CURRENT_VERSION=$( php -v | head -n 1 | cut -c 5-7 )
+        if [ "$1" = "$CURRENT_VERSION" ]
+        then
+            echo "This version is already enabled"
+        else
+            echo "Switching to PHP$1..."
+            a2dismod php$CURRENT_VERSION
+            a2enmod php$1
+            update-alternatives --set php /usr/bin/php$1
+            service apache2 restart
+            echo "Success!"
+        fi
+    ;;
+    *)
+        echo "Failure!"
+        echo "Invalid argument '$1'. List of available values are: '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2'."
+    ;;
+esac
+echo "Current PHP version: $( php -v | head -n 1 | cut -c 5-7 )"
